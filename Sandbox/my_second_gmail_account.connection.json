@@ -1,0 +1,6 @@
+{
+  "name": "My second Gmail account",
+  "provider": "gmail",
+  "secure_gateway_tunnel_name": null,
+  "root_folder": false
+}

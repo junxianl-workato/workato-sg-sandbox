@@ -1,0 +1,115 @@
+{
+  "name": "Test OPA Scripting",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 4,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "de470bcd",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> every 5 minutes",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "onprem_command_line_scripts",
+        "name": "execute_script",
+        "as": "3e17fe13",
+        "title": null,
+        "description": "Execute <span class=\"provider\">Echo Stuff to a File</span> script",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "script_id": "Echo Stuff to a File"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "script_id": "echo_stuff",
+          "parameters": {
+            "first_param": "firstparam from workato",
+            "second_param": "secondparam from workato"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Script input",
+            "hint": "Provide value for script input",
+            "sticky": false,
+            "optional": false,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "First param",
+                "name": "first_param",
+                "type": "string"
+              },
+              {
+                "control_type": "text",
+                "label": "Second param",
+                "name": "second_param",
+                "type": "string"
+              }
+            ]
+          }
+        ],
+        "uuid": "89c12169-90b2-4198-8e65-2a28b5c81dea"
+      }
+    ],
+    "uuid": "ab5cade8-eb89-42dc-b95f-cdc7d043feb4"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "onprem_command_line_scripts",
+      "account_id": {
+        "zip_name": "Sandbox/my_on_prem_command_line_scripts_account.connection.json",
+        "name": "My On-prem command-line scripts account",
+        "folder": "Sandbox"
+      },
+      "skip_validation": false
+    }
+  ]
+}

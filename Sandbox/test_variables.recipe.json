@@ -1,0 +1,468 @@
+{
+  "name": "Test Variables",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 13,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "133f414c",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> every 5 minutes",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "780cf8fe",
+        "title": "  Create variable test var",
+        "description": "Create variable <span class=\"provider\">test var</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "variables": {
+            "schema": "[{\"name\":\"test_var\",\"type\":\"string\",\"optional\":true,\"label\":\"test var\",\"control_type\":\"text\"}]",
+            "data": {
+              "test_var": "{\n\t\t\"TZA-SOLTHOM\": {\n\t\t\t\"replen_min\": null,\n\t\t\t\"replen_max\": null,\n\t\t\t\"quantity\": \"0\",\n\t\t\t\"async_message\": null,\n\t\t\t\"product_id\": \"272\",\n\t\t\t\"sku\": \"TZA-SOLTHOM\",\n\t\t\t\"available\": 0,\n\t\t\t\"locked\": \"0\",\n\t\t\t\"returns\": \"0\",\n\t\t\t\"lost\": \"0\",\n\t\t\t\"reserved\": \"0\",\n\t\t\t\"valueCost\": \"28.5500\",\n\t\t\t\"title\": \"Tigerz11 Thompson Solenoid\",\n\t\t\t\"warehouse_id\": \"123\",\n\t\t\t\"ordered\": 0,\n\t\t\t\"status\": 1,\n\t\t\t\"target\": \"online\"\n\t\t},\n\t\t\"FSPA-WI_CONTROLBOX_GR\": {\n\t\t\t\"replen_min\": null,\n\t\t\t\"replen_max\": null,\n\t\t\t\"quantity\": 0,\n\t\t\t\"async_message\": null,\n\t\t\t\"product_id\": \"3719\",\n\t\t\t\"sku\": \"FSPA-WI_CONTROLBOX_GR\",\n\t\t\t\"available\": 1,\n\t\t\t\"locked\": 0,\n\t\t\t\"returns\": 0,\n\t\t\t\"lost\": 0,\n\t\t\t\"reserved\": 0,\n\t\t\t\"valueCost\": \"0.0000\",\n\t\t\t\"title\": \"PART - Winch Control Box - Grande\",\n\t\t\t\"warehouse_id\": \"96\",\n\t\t\t\"ordered\": 0,\n\t\t\t\"id\": 3719,\n\t\t\t\"status\": 1,\n\t\t\t\"target\": \"online\"\n\t\t},\n\t\t\"FREIGHT\": {\n\t\t\t\"replen_min\": null,\n\t\t\t\"replen_max\": null,\n\t\t\t\"quantity\": \"0\",\n\t\t\t\"async_message\": null,\n\t\t\t\"product_id\": \"441\",\n\t\t\t\"sku\": \"FREIGHT\",\n\t\t\t\"available\": -11,\n\t\t\t\"locked\": \"0\",\n\t\t\t\"returns\": \"0\",\n\t\t\t\"lost\": \"0\",\n\t\t\t\"reserved\": \"0\",\n\t\t\t\"valueCost\": null,\n\t\t\t\"title\": \"FREIGHT\",\n\t\t\t\"warehouse_id\": \"123\",\n\t\t\t\"ordered\": 0,\n\t\t\t\"status\": 1,\n\t\t\t\"target\": \"online\"\n\t\t},\n\t\t\"FSPA-RTT_LEXT\": {\n\t\t\t\"replen_min\": null,\n\t\t\t\"replen_max\": null,\n\t\t\t\"quantity\": \"0\",\n\t\t\t\"async_message\": null,\n\t\t\t\"product_id\": \"3612\",\n\t\t\t\"sku\": \"FSPA-RTT_LEXT\",\n\t\t\t\"available\": 61,\n\t\t\t\"locked\": \"0\",\n\t\t\t\"returns\": \"0\",\n\t\t\t\"lost\": \"0\",\n\t\t\t\"reserved\": \"0\",\n\t\t\t\"valueCost\": \"13.0900\",\n\t\t\t\"title\": \"PART - Adventure Kings Tourer Roof Top Tent - Extension Ladder\",\n\t\t\t\"warehouse_id\": \"123\",\n\t\t\t\"ordered\": 0,\n\t\t\t\"status\": 1,\n\t\t\t\"target\": \"online\"\n\t\t}\n        }"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "test_var",
+            "control_type": "text",
+            "label": "test var",
+            "optional": true
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "variables",
+            "control_type": "form-schema-builder",
+            "label": "Variables",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "broadcast_change_event": true,
+                "type": "string",
+                "name": "schema"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "test var",
+                    "name": "test_var",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  }
+                ],
+                "label": "Data",
+                "type": "object",
+                "name": "data"
+              }
+            ],
+            "exclude_fields": [
+              "hint"
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "variables.data.test_var"
+        ],
+        "uuid": "47e61e69-01fb-476c-8da0-cfbaaa8dae05"
+      },
+      {
+        "number": 2,
+        "provider": "json_parser",
+        "name": "parse_json",
+        "as": "9b2ac3a9",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "sample_document": "{\n\t\t\"key\": {\n\t\t\t\"replen_min\": \"\",\n\t\t\t\"replen_max\": \"\",\n\t\t\t\"quantity\": \"0\",\n\t\t\t\"async_message\": \"\",\n\t\t\t\"product_id\": \"272\",\n\t\t\t\"sku\": \"TZA-SOLTHOM\",\n\t\t\t\"available\": 0,\n\t\t\t\"locked\": \"0\",\n\t\t\t\"returns\": \"0\",\n\t\t\t\"lost\": \"0\",\n\t\t\t\"reserved\": \"0\",\n\t\t\t\"valueCost\": \"28.5500\",\n\t\t\t\"title\": \"Tigerz11 Thompson Solenoid\",\n\t\t\t\"warehouse_id\": \"123\",\n\t\t\t\"ordered\": 0,\n\t\t\t\"status\": 1,\n\t\t\t\"target\": \"online\"\n\t\t}\n        }",
+          "document": "#{_('data.workato_variable.780cf8fe.test_var')}"
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "document",
+            "label": "Document",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Replen min",
+                    "type": "string",
+                    "name": "replen_min"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Replen max",
+                    "type": "string",
+                    "name": "replen_max"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Quantity",
+                    "type": "string",
+                    "name": "quantity"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Async message",
+                    "type": "string",
+                    "name": "async_message"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product ID",
+                    "type": "string",
+                    "name": "product_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Sku",
+                    "type": "string",
+                    "name": "sku"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Available",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "available"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Locked",
+                    "type": "string",
+                    "name": "locked"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Returns",
+                    "type": "string",
+                    "name": "returns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Lost",
+                    "type": "string",
+                    "name": "lost"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Reserved",
+                    "type": "string",
+                    "name": "reserved"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value cost",
+                    "type": "string",
+                    "name": "valueCost"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Title",
+                    "type": "string",
+                    "name": "title"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Warehouse ID",
+                    "type": "string",
+                    "name": "warehouse_id"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Ordered",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "ordered"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Status",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "status"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Target",
+                    "type": "string",
+                    "name": "target"
+                  }
+                ],
+                "label": "Key",
+                "type": "object",
+                "name": "key"
+              }
+            ]
+          }
+        ],
+        "uuid": "f1b34603-b7a2-46e2-ad80-834fbcfbad9b"
+      },
+      {
+        "number": 3,
+        "provider": "csv_parser",
+        "name": "parse_csv",
+        "as": "390da435",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "col_sep": ",",
+          "skip_first_line": "true",
+          "column_value_by": "index",
+          "quote_char": "\"",
+          "csv_content": "=_('data.json_parser.9b2ac3a9.document').keys.join(\"\\n\")",
+          "header_line": "key, value"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "lines",
+            "label": "Lines",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "type": "string",
+                "name": "column_0"
+              },
+              {
+                "control_type": "text",
+                "label": " value",
+                "type": "string",
+                "name": "column_1"
+              }
+            ]
+          }
+        ],
+        "uuid": "2b49f7ac-0548-4fac-816b-61965cb27eb7"
+      },
+      {
+        "number": 4,
+        "provider": "workato_variable",
+        "name": "declare_list",
+        "as": "c3aea45c",
+        "title": " Create LogList list",
+        "description": "Create <span class=\"provider\">LogList</span> list",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "name": "LogList",
+          "list_item_schema_json": "[{\"name\":\"LogLine\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "LogList",
+            "hint": "",
+            "optional": false,
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Log line",
+                "name": "LogLine",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "Items",
+            "hint": "Set the initial items in the list. Defaults to an empty list if not supplied.",
+            "optional": true,
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Log line",
+                "name": "LogLine",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "04b49ab6-e2ac-4705-a37e-ff3dc513495c"
+      },
+      {
+        "number": 5,
+        "as": "fb1428b8",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "workato_variable",
+            "name": "insert_to_list",
+            "as": "fbac0eea",
+            "title": "Add item to LogList list",
+            "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">LogList</span> list",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "LogList (step 5)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "location": "end",
+              "name": "04b49ab6-e2ac-4705-a37e-ff3dc513495c:c3aea45c",
+              "list_item": {
+                "LogLine": "=_('data.foreach.fb1428b8.column_0')+ \":\"+_('data.json_parser.9b2ac3a9.document')[_('data.foreach.fb1428b8.column_0')]"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "label": "List item",
+                "hint": "",
+                "optional": false,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Log line",
+                    "name": "LogLine",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "uuid": "aad1d4df-e932-4bbb-8b6f-835288bba9e4"
+          }
+        ],
+        "source": "#{_('data.csv_parser.390da435.lines')}",
+        "uuid": "bd615f89-3252-4007-b5f8-109dd1df289a"
+      },
+      {
+        "number": 7,
+        "provider": "logger",
+        "name": "log_message",
+        "as": "2ad6cdd7",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "message": "=_('data.workato_variable.c3aea45c.list_items')"
+        },
+        "uuid": "49de7c19-0daa-4211-883c-7309004afdf6"
+      }
+    ],
+    "uuid": "ac87afc1-6203-4d1b-8957-a2ba8caee413"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "json_parser",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "csv_parser",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

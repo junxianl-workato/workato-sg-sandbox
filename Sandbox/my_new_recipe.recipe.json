@@ -1,0 +1,24 @@
+{
+  "name": "My new recipe",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+    },
+    "block": [
+
+    ],
+    "uuid": "1ee699b8-5ef9-47d5-b740-8edcdfe2ab93"
+  },
+  "config": [
+
+  ]
+}

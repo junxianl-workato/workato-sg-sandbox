@@ -1,0 +1,167 @@
+{
+  "name": "Test Google Drive Download/Upload",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 6,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "c699af04",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> on a <span class=\"provider\">specified schedule</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "google_drive",
+        "name": "search_file_or_folder",
+        "as": "4eb3a8e7",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "folderId": {
+            "ids": [
+              "0AJCKxYHy5DFPUk9PVA",
+              "1W5L476AES9EsNqbXhXQArjWSX7PMbm2F"
+            ],
+            "titles": [
+              "My Drive",
+              "Test Data"
+            ]
+          }
+        },
+        "toggleCfg": {
+          "folderId": true
+        },
+        "input": {
+          "kind": "Files",
+          "name": "testpdf",
+          "folderId": "1W5L476AES9EsNqbXhXQArjWSX7PMbm2F"
+        },
+        "uuid": "869f87e9-d8d5-4a6a-8432-1f038ccc80b0"
+      },
+      {
+        "number": 2,
+        "provider": "google_drive",
+        "name": "download_file_contents",
+        "as": "49c5a1a3",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "fileId": true
+        },
+        "input": {
+          "fileId": "#{_('data.google_drive.4eb3a8e7.files.first.id')}"
+        },
+        "uuid": "28dfc4df-abbe-4c78-b11d-f8f5dbda2b90",
+        "skip": true
+      },
+      {
+        "number": 3,
+        "provider": "file_connector",
+        "name": "read_file",
+        "as": "1d23b4b4",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "base64_encode": true,
+          "is_large": true
+        },
+        "input": {
+          "base64_encode": "false",
+          "is_large": "false",
+          "url": "#{_('data.google_drive.4eb3a8e7.files.first.webContentLink')}"
+        },
+        "uuid": "4238efa3-4671-4232-ac60-42af2f0dbddd"
+      },
+      {
+        "number": 4,
+        "provider": "google_drive",
+        "name": "upload_file",
+        "as": "ca320d87",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "parents": {
+            "ids": [
+              "0AJCKxYHy5DFPUk9PVA",
+              "1W5L476AES9EsNqbXhXQArjWSX7PMbm2F"
+            ],
+            "titles": [
+              "My Drive",
+              "Test Data"
+            ]
+          }
+        },
+        "toggleCfg": {
+          "parents": true
+        },
+        "input": {
+          "fileContent": "#{_('data.file_connector.1d23b4b4.body')}",
+          "mimeType": "#{_('data.google_drive.4eb3a8e7.files.first.mimeType')}",
+          "parents": "1W5L476AES9EsNqbXhXQArjWSX7PMbm2F"
+        },
+        "uuid": "62b01c7c-a0ab-45f4-9ed3-3408eaf54d16"
+      }
+    ],
+    "uuid": "21e30434-422f-46dc-9f83-d20fbe358afa"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "google_drive",
+      "account_id": {
+        "zip_name": "Sandbox/my_second_google_drive_account.connection.json",
+        "name": "My second Google Drive account",
+        "folder": "Sandbox"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "file_connector",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

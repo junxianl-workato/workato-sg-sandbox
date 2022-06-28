@@ -1,0 +1,16 @@
+{
+  "name": "Fontrip Demo",
+  "method": "POST",
+  "path": "fontrip-demo",
+  "legacy": false,
+  "recipe_id": {
+    "zip_name": "Sandbox/fontrip_demo.recipe.json",
+    "name": "Fontrip Demo",
+    "folder": "Sandbox"
+  },
+  "api_group_id": {
+    "zip_name": "fontrip_demo.api_group.json",
+    "name": "Fontrip Demo",
+    "folder": ""
+  }
+}

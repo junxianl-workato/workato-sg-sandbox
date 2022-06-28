@@ -1,0 +1,168 @@
+{
+  "name": "test emarsys tokengen",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 8,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "99631989",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> on a <span class=\"provider\">specified schedule</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_custom_code",
+        "name": "invoke_custom_ruby_code",
+        "as": "73cdf941",
+        "title": null,
+        "description": "Execute <span class=\"provider\">ruby</span> code: <span class=\"provider\">create x-wsse for emarsys</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "code": "# @param input [Hash] input hash supplied in the recipe step\n# @return value returned in the last line\n# Eg: Code for returning country code for an IP address\n# {\n#   country_code: get(\"http://freegeoip.net/json/\" + input[\"ip_address\"])\n# }\n\nusername = 'customer001'\nsecretKey = input['password']\n\nnonce = 'd36e316282959a9ed4c89851497a717f'\ntimestamp = Time.now.utc.iso8601\ntext = nonce + timestamp + secretKey\npasswordDigest = (nonce + timestamp + secretKey).sha1.encode_base64.strip\n\n\n\nheader = 'UsernameToken ' +\n      \"Username=\\\"#{username}\\\", \" +\n      \"PasswordDigest=\\\"#{passwordDigest}\\\", \" +\n      \"Nonce=\\\"#{nonce}\\\", \" +\n      \"Created=\\\"#{timestamp}\\\"\"\n\nheader",
+          "code_output_schema_json": "[{\"name\":\"emarsys-wsse-header\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+          "name": "create x-wsse for emarsys",
+          "code_input": {
+            "schema": "[{\"name\":\"password\",\"type\":\"string\",\"optional\":true,\"label\":\"password\",\"control_type\":\"text\"}]",
+            "data": {
+              "password": "#{_('data.workato.job_context.account_properties.password', 'account_property', 'password')}"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "output",
+            "label": "Output",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Emarsys-wsse-header",
+                "name": "emarsys_wsse_header",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "code_input",
+            "control_type": "form-schema-builder",
+            "label": "Input",
+            "sticky": true,
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "type": "string",
+                "name": "schema"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "password",
+                    "name": "password",
+                    "type": "string",
+                    "optional": true
+                  }
+                ],
+                "label": "Data",
+                "type": "object",
+                "name": "data"
+              }
+            ],
+            "override": true
+          }
+        ],
+        "visible_config_fields": [
+          "name",
+          "code_input",
+          "code_output_schema_json",
+          "code",
+          "code_input.data.password"
+        ],
+        "uuid": "73ff6495-81cc-4c06-8344-c9046f1d950e"
+      },
+      {
+        "number": 2,
+        "provider": "logger",
+        "name": "log_message",
+        "as": "914ec93d",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "message": "#{_('data.workato_custom_code.73cdf941.output.emarsys_wsse_header')}"
+        },
+        "uuid": "6122a6b9-2402-43d8-949e-eda016d72640"
+      }
+    ],
+    "uuid": "b6f6c94e-63a4-4b54-a571-7ab3822305e7"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_custom_code",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}
