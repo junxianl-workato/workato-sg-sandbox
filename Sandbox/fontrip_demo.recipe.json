@@ -1,0 +1,384 @@
+{
+  "name": "Fontrip Demo",
+  "description": "When there is a trigger event, do action",
+  "version": 8,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_api_platform",
+    "name": "receive_request",
+    "as": "e614dcd1",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "response.responses.0.http_status_code": true
+    },
+    "input": {
+      "request": {
+        "content_type": "json",
+        "schema": "[{\"name\":\"date\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"title\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"contents\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+      },
+      "response": {
+        "content_type": "json",
+        "responses": [
+          {
+            "name": "success",
+            "http_status_code": "200",
+            "body_schema": "[{\"name\":\"content\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+          }
+        ]
+      }
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "context",
+        "label": "Context",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Calling IP address",
+            "optional": true,
+            "type": "string",
+            "name": "calling_ip"
+          },
+          {
+            "label": "Access profile",
+            "type": "object",
+            "name": "access_profile",
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "Access profile ID",
+                "parse_output": "integer_conversion",
+                "optional": true,
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "control_type": "text",
+                "label": "Access profile name",
+                "optional": true,
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "control_type": "text",
+                "label": "Access profile authentication type",
+                "optional": true,
+                "type": "string",
+                "name": "type"
+              }
+            ]
+          },
+          {
+            "label": "API client",
+            "type": "object",
+            "name": "client",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "API client ID",
+                "optional": true,
+                "type": "string",
+                "name": "id"
+              },
+              {
+                "control_type": "text",
+                "label": "API client name",
+                "optional": true,
+                "type": "string",
+                "name": "name"
+              }
+            ]
+          },
+          {
+            "label": "JWT claims",
+            "type": "object",
+            "name": "jwt_payload",
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "Issued At",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "iat"
+              },
+              {
+                "control_type": "integer",
+                "label": "Not Before",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "nbf"
+              },
+              {
+                "control_type": "integer",
+                "label": "Expiration Time",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "exp"
+              },
+              {
+                "control_type": "text",
+                "label": "Audience",
+                "optional": true,
+                "type": "string",
+                "name": "aud"
+              },
+              {
+                "control_type": "text",
+                "label": "JWT ID",
+                "optional": true,
+                "type": "string",
+                "name": "jti"
+              },
+              {
+                "control_type": "text",
+                "label": "Issuer",
+                "optional": true,
+                "type": "string",
+                "name": "iss"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Request parameters",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Date",
+            "name": "date",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Title",
+            "name": "title",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Contents",
+            "name": "contents",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "google_sheets",
+        "name": "add_spreadsheet_row_v4",
+        "as": "c2412b21",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "spreadsheet": "Fontrip Demo"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "team_drives": "my_drive",
+          "spreadsheet": "1n-j2PPxIC6oPhDA2Xrexup6LsLf8tp8t0V9r-HwwSA8",
+          "sheet": "Sheet1",
+          "data": {
+            "col_1": "#{_('data.workato_api_platform.e614dcd1.request.date')}",
+            "col_2": "#{_('data.workato_api_platform.e614dcd1.request.title')}",
+            "col_3": "#{_('data.workato_api_platform.e614dcd1.request.contents')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "sheet",
+            "control_type": "select",
+            "label": "Sheet",
+            "hint": "Select a sheet to add row to. The sheet must have at least one header row and one data row. <a href='https://workato.freshdesk.com/support/solutions/articles/1000213808-working-with-google-sheets' target='_blank'>Learn more</a>",
+            "pick_list": [
+              [
+                "Sheet1",
+                "Sheet1"
+              ]
+            ],
+            "optional": false,
+            "extends_schema": true,
+            "toggle_hint": "Select a sheet",
+            "toggle_field": {
+              "control_type": "text",
+              "label": "Sheet name",
+              "toggle_hint": "Use sheet name",
+              "extends_schema": true,
+              "change_on_blur": true,
+              "toggle_to_secondary_hint": "Use sheet name",
+              "toggle_to_primary_hint": "Select a sheet",
+              "hint": "Use <b>Sheet name</b> pill from the output of other Google Sheets’ triggers/actions. Or enter sheet name manually.",
+              "type": "string",
+              "name": "sheet_name"
+            }
+          },
+          {
+            "type": "object",
+            "name": "data",
+            "label": "Columns",
+            "hint": "Input values of the new row.",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "date",
+                "sticky": true,
+                "optional": true,
+                "type": "string",
+                "name": "col_1"
+              },
+              {
+                "control_type": "text",
+                "label": "subject",
+                "sticky": true,
+                "optional": true,
+                "type": "string",
+                "name": "col_2"
+              },
+              {
+                "control_type": "text",
+                "label": "email data",
+                "sticky": true,
+                "optional": true,
+                "type": "string",
+                "name": "col_3"
+              }
+            ]
+          }
+        ],
+        "uuid": "c3ef39b4-b62e-4f80-868f-d5d6133b5291"
+      },
+      {
+        "number": 2,
+        "provider": "onprem_files",
+        "name": "download_file",
+        "as": "ea8d063d",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "path": {
+            "ids": [
+              "/",
+              "/test",
+              "/test/bc_test"
+            ],
+            "titles": [
+              "Home folder",
+              "test",
+              "bc_test"
+            ]
+          }
+        },
+        "toggleCfg": {
+          "path": true
+        },
+        "input": {
+          "path": "/test/bc_test"
+        },
+        "uuid": "e8c48157-d16c-4991-81a0-2e70f8f3c163"
+      },
+      {
+        "number": 3,
+        "provider": "workato_api_platform",
+        "name": "return_response",
+        "as": "9a50efa5",
+        "title": null,
+        "description": "<span class=\"step-statement\">Return</span> <span class=\"provider\">success</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "http_status_code": "200",
+          "response": {
+            "content": "#{_('data.onprem_files.ea8d063d.content')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "http_status_code",
+            "control_type": "select",
+            "label": "Response",
+            "pick_list": [
+              [
+                "success",
+                "200"
+              ]
+            ],
+            "extends_schema": true,
+            "change_on_blur": true
+          },
+          {
+            "type": "object",
+            "name": "response",
+            "label": "Response body",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Content",
+                "name": "content",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "7a594206-819c-4e08-b2a6-03a5c5baa4af"
+      }
+    ],
+    "uuid": "a96abe7e-aa5a-4b01-a567-3c8c766588f4"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "google_sheets",
+      "account_id": {
+        "zip_name": "Sandbox/my_second_google_sheets_account.connection.json",
+        "name": "My second Google Sheets account",
+        "folder": "Sandbox"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_api_platform",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "onprem_files",
+      "account_id": {
+        "zip_name": "Sandbox/my_macbook_opa_files_connection.connection.json",
+        "name": "My Macbook OPA Files Connection",
+        "folder": "Sandbox"
+      },
+      "skip_validation": false
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "name": "Test Repeat Helper",
+  "description": "When there is a trigger event, do action",
+  "version": 2,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "f6ae3b36",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> on a <span class=\"provider\">specified schedule</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "772fa860",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "5"
+        },
+        "uuid": "d25eb61a-85e5-48ac-b1ff-530acb7c1775"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_list",
+        "as": "dd405ad9",
+        "title": " Create output list",
+        "description": "Create <span class=\"provider\">output</span> list",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "name": "output",
+          "list_item_schema_json": "[{\"name\":\"value1\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"value2\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "output",
+            "hint": "",
+            "optional": false,
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Value 1",
+                "name": "value1",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Value 2",
+                "name": "value2",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "Items",
+            "hint": "Set the initial items in the list. Defaults to an empty list if not supplied.",
+            "optional": true,
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Value 1",
+                "name": "value1",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Value 2",
+                "name": "value2",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "a5740ff6-dbc2-4ede-9cad-585fbbbe3979"
+      },
+      {
+        "number": 3,
+        "as": "95a9fbd9",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "workato_variable",
+            "name": "insert_to_list",
+            "as": "4b549bc2",
+            "title": "Add item to output list",
+            "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">output</span> list",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "output (step 3)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "location": "end",
+              "name": "a5740ff6-dbc2-4ede-9cad-585fbbbe3979:dd405ad9",
+              "list_item": {
+                "value1": "#{_('data.foreach.95a9fbd9.seq_no')}",
+                "value2": "#{_('data.foreach.95a9fbd9.index', 'foreach_meta')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "label": "List item",
+                "hint": "",
+                "optional": false,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Value 1",
+                    "name": "value1",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value 2",
+                    "name": "value2",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "uuid": "0b9f9968-0096-4351-9128-48d36e554aba"
+          }
+        ],
+        "source": "#{_('data.workato_list.772fa860.list')}",
+        "uuid": "459b4769-7bcd-4ff3-b1d0-e24ccbe24683"
+      },
+      {
+        "number": 5,
+        "provider": "logger",
+        "name": "log_message",
+        "as": "1ea0cb2b",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "message": "=_('data.workato_variable.dd405ad9.list_items')"
+        },
+        "uuid": "51038b3d-daef-4d5f-8602-f144eb3ed4cb"
+      }
+    ],
+    "uuid": "4b4a2770-cb21-480e-bff0-00e9e94ffab2"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

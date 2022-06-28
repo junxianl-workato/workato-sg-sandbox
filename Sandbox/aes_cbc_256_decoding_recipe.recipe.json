@@ -1,0 +1,178 @@
+{
+  "name": "AES-CBC-256 decoding recipe",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 3,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "3cccdf93",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> on a <span class=\"provider\">specified schedule</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "f8316c93",
+        "title": "  Create variables encrypted text, secret key",
+        "description": "Create variables <span class=\"provider\">encrypted text</span>, <span class=\"provider\">secret key</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "variables": {
+            "schema": "[{\"name\":\"encrypted_text\",\"type\":\"string\",\"optional\":true,\"label\":\"encrypted text\",\"control_type\":\"text\"},{\"name\":\"secret_key\",\"type\":\"string\",\"optional\":true,\"label\":\"secret key\",\"control_type\":\"text\"}]",
+            "data": {
+              "encrypted_text": "zzBJ+ft3cN4k9+gQ0XIub9fa2O8gmwqqWzvLpmQrb+ebNWPrVQ2jFYWg1Ec5WPNQOJsuF4A530tU4CjZWLUwAQq8nj6h/mLwfqfQX2tIXHro98jGpvr7WgNCO7prYkOpyrltwxSWhqaQaywZ7Lga8/AKP4vbengl6pZCHEG+t9YXbNTySanaCIPaBOwveKdopDE+UEFt60lb1fmm9wJBMVfkfBWO5gYh31GUQcBh9gIzDm91pbWSDTbP+IhcpaYfBOJ7gL52Tq0ABzOk/tf5nrGgx8FguLaMozW4i35TaGkofaVbieSmr5ousFKxKANTkrytrWZJR9KsBH8JIrsugIMDLlJETeTcom0YFiXGi7l0/rKU0WDkG+RkCCiNyTO1KBx6BGgHWql+J42fJ7eUGA==",
+              "secret_key": "@McQfTjWnZr4u7x!A%D*G-JaNdRgUkXp"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "encrypted_text",
+            "control_type": "text",
+            "label": "encrypted text",
+            "optional": true
+          },
+          {
+            "type": "string",
+            "name": "secret_key",
+            "control_type": "text",
+            "label": "secret key",
+            "optional": true
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "variables",
+            "control_type": "form-schema-builder",
+            "label": "Variables",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "broadcast_change_event": true,
+                "type": "string",
+                "name": "schema"
+              },
+              {
+                "label": "Data",
+                "type": "object",
+                "name": "data",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "encrypted text",
+                    "name": "encrypted_text",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "secret key",
+                    "name": "secret_key",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  }
+                ]
+              }
+            ],
+            "exclude_fields": [
+              "hint"
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "variables.data.encrypted_text",
+          "variables",
+          "variables.schema",
+          "variables.data.secret_key"
+        ],
+        "uuid": "78c6c415-6b52-4566-9bcf-ba106076ed96"
+      },
+      {
+        "number": 2,
+        "provider": "logger",
+        "name": "log_message",
+        "as": "147cdd66",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "message": "=workato.aes_cbc_decrypt(_('data.workato_variable.f8316c93.encrypted_text').decode_base64, _('data.workato_variable.f8316c93.secret_key')).as_string('utf-8')"
+        },
+        "uuid": "80f6e21d-b187-48ef-9cd3-6bd05adce328"
+      }
+    ],
+    "uuid": "e398e8a0-98cb-42a6-8bfd-cf08b5324374"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

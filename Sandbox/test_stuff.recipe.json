@@ -1,0 +1,196 @@
+{
+  "name": "Test Stuff",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 9,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "8f0cebf2",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> on a <span class=\"provider\">specified schedule</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "da241c0e",
+        "title": "  Create variables Name, Email, Number",
+        "description": "Create variables <span class=\"provider\">Name</span>, <span class=\"provider\">Email</span>, <span class=\"provider\">Number</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "variables": {
+            "schema": "[{\"name\":\"name\",\"type\":\"string\",\"optional\":true,\"label\":\"Name\",\"control_type\":\"text\"},{\"name\":\"email\",\"type\":\"string\",\"optional\":true,\"label\":\"Email\",\"control_type\":\"text\"},{\"name\":\"number\",\"type\":\"string\",\"optional\":true,\"label\":\"Number\",\"control_type\":\"text\"}]",
+            "data": {
+              "number": "123",
+              "email": "asd@alsjd",
+              "name": "JASDasd"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "name",
+            "control_type": "text",
+            "label": "Name",
+            "optional": true
+          },
+          {
+            "type": "string",
+            "name": "email",
+            "control_type": "text",
+            "label": "Email",
+            "optional": true
+          },
+          {
+            "type": "string",
+            "name": "number",
+            "control_type": "text",
+            "label": "Number",
+            "optional": true
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "variables",
+            "control_type": "form-schema-builder",
+            "label": "Variables",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "broadcast_change_event": true,
+                "type": "string",
+                "name": "schema"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "name": "name",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "name": "email",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Number",
+                    "name": "number",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  }
+                ],
+                "label": "Data",
+                "type": "object",
+                "name": "data"
+              }
+            ],
+            "exclude_fields": [
+              "hint"
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "variables.data.name",
+          "variables",
+          "variables.schema",
+          "variables.data.email",
+          "variables.data.number"
+        ],
+        "uuid": "f6780b15-d473-4d86-981b-0666b7435f2a"
+      },
+      {
+        "number": 2,
+        "provider": "logger",
+        "name": "log_message",
+        "as": "e410832d",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "message": "=(_('data.workato_variable.da241c0e.name')+_('data.workato_variable.da241c0e.email')+_('data.workato_variable.da241c0e.number')).md5_hexdigest"
+        },
+        "uuid": "85800c8f-d640-4113-943a-e9ae56ea8b66"
+      }
+    ],
+    "uuid": "14595eeb-43cc-4254-a2aa-498a31f62094"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

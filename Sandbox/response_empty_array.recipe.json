@@ -1,0 +1,561 @@
+{
+  "name": "Response Empty Array",
+  "description": "When there is a new API request, do action",
+  "version": 7,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_api_platform",
+    "name": "receive_request",
+    "as": "a9bf6021",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "response.responses.0.http_status_code": true,
+      "response.responses.1.http_status_code": true,
+      "response.responses.2.http_status_code": true
+    },
+    "input": {
+      "request": {
+        "content_type": "json",
+        "headers": "[]",
+        "schema": "[{\"name\":\"name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+      },
+      "response": {
+        "content_type": "json",
+        "responses": [
+          {
+            "http_status_code": "200",
+            "name": "Success",
+            "body_schema": "[{\"name\":\"product\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"price\",\"type\":\"number\",\"optional\":false,\"control_type\":\"number\"},{\"name\":\"qty\",\"type\":\"integer\",\"optional\":false,\"control_type\":\"integer\"}]"
+          },
+          {
+            "name": "4WD response with child items",
+            "http_status_code": "201",
+            "body_schema": "[{\"control_type\":\"text\",\"label\":\"Order number\",\"type\":\"string\",\"name\":\"order_number\",\"optional\":true},{\"name\":\"order_items\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Order items\",\"optional\":true,\"properties\":[{\"control_type\":\"integer\",\"label\":\"Item ID\",\"parse_output\":\"integer_conversion\",\"name\":\"item_id\",\"type\":\"integer\",\"optional\":false},{\"control_type\":\"number\",\"label\":\"Item price\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"item_price\"},{\"control_type\":\"number\",\"label\":\"Item cost\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"item_cost\"},{\"control_type\":\"text\",\"label\":\"Sku\",\"type\":\"string\",\"name\":\"sku\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"integer\",\"label\":\"Qty\",\"parse_output\":\"integer_conversion\",\"name\":\"qty\",\"type\":\"integer\",\"optional\":false},{\"control_type\":\"integer\",\"label\":\"Qty shipped\",\"parse_output\":\"integer_conversion\",\"name\":\"qty_shipped\",\"type\":\"integer\",\"optional\":false},{\"control_type\":\"number\",\"label\":\"Row total price\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"row_total_price\"},{\"name\":\"shipping_references\",\"type\":\"array\",\"of\":\"string\",\"label\":\"Shipping References\"},{\"name\":\"child_items\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Child items\",\"optional\":true,\"properties\":[{\"control_type\":\"integer\",\"label\":\"Item ID\",\"parse_output\":\"integer_conversion\",\"name\":\"item_id\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"number\",\"label\":\"Item price\",\"parse_output\":\"float_conversion\",\"name\":\"item_price\",\"type\":\"number\",\"optional\":true},{\"control_type\":\"number\",\"label\":\"Item cost\",\"parse_output\":\"float_conversion\",\"name\":\"item_cost\",\"type\":\"number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Sku\",\"name\":\"sku\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Name\",\"name\":\"name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"integer\",\"label\":\"Qty\",\"parse_output\":\"integer_conversion\",\"name\":\"qty\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"integer\",\"label\":\"Qty shipped\",\"parse_output\":\"integer_conversion\",\"name\":\"qty_shipped\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"number\",\"label\":\"Row total price\",\"parse_output\":\"float_conversion\",\"name\":\"row_total_price\",\"type\":\"number\",\"optional\":true},{\"name\":\"shipping_references\",\"type\":\"array\",\"of\":\"string\",\"label\":\"Shipping References\",\"optional\":true,\"properties\":[]}]}]}]"
+          },
+          {
+            "name": "4WD response without child items",
+            "body_schema": "[{\"control_type\":\"text\",\"label\":\"Order number\",\"type\":\"string\",\"name\":\"order_number\",\"optional\":true},{\"name\":\"order_items\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Order items\",\"optional\":true,\"properties\":[{\"control_type\":\"integer\",\"label\":\"Item ID\",\"parse_output\":\"integer_conversion\",\"name\":\"item_id\",\"type\":\"integer\",\"optional\":false},{\"control_type\":\"number\",\"label\":\"Item price\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"item_price\"},{\"control_type\":\"number\",\"label\":\"Item cost\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"item_cost\"},{\"control_type\":\"text\",\"label\":\"Sku\",\"type\":\"string\",\"name\":\"sku\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"integer\",\"label\":\"Qty\",\"parse_output\":\"integer_conversion\",\"name\":\"qty\",\"type\":\"integer\",\"optional\":false},{\"control_type\":\"integer\",\"label\":\"Qty shipped\",\"parse_output\":\"integer_conversion\",\"name\":\"qty_shipped\",\"type\":\"integer\",\"optional\":false},{\"control_type\":\"number\",\"label\":\"Row total price\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"row_total_price\"},{\"name\":\"shipping_references\",\"type\":\"array\",\"of\":\"string\",\"label\":\"Shipping References\"}]}]",
+            "http_status_code": "202"
+          }
+        ],
+        "headers": "[{\"name\":\"Status\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+      }
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "context",
+        "label": "Context",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Calling IP address",
+            "optional": true,
+            "type": "string",
+            "name": "calling_ip"
+          },
+          {
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "Access profile ID",
+                "parse_output": "integer_conversion",
+                "optional": true,
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "control_type": "text",
+                "label": "Access profile name",
+                "optional": true,
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "control_type": "text",
+                "label": "Access profile authentication type",
+                "optional": true,
+                "type": "string",
+                "name": "type"
+              }
+            ],
+            "label": "Access profile",
+            "type": "object",
+            "name": "access_profile"
+          },
+          {
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "API client ID",
+                "optional": true,
+                "type": "string",
+                "name": "id"
+              },
+              {
+                "control_type": "text",
+                "label": "API client name",
+                "optional": true,
+                "type": "string",
+                "name": "name"
+              }
+            ],
+            "label": "API client",
+            "type": "object",
+            "name": "client"
+          },
+          {
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "Issued At",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "iat"
+              },
+              {
+                "control_type": "integer",
+                "label": "Not Before",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "nbf"
+              },
+              {
+                "control_type": "integer",
+                "label": "Expiration Time",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "exp"
+              },
+              {
+                "control_type": "text",
+                "label": "Audience",
+                "optional": true,
+                "type": "string",
+                "name": "aud"
+              },
+              {
+                "control_type": "text",
+                "label": "JWT ID",
+                "optional": true,
+                "type": "string",
+                "name": "jti"
+              },
+              {
+                "control_type": "text",
+                "label": "Issuer",
+                "optional": true,
+                "type": "string",
+                "name": "iss"
+              }
+            ],
+            "label": "JWT claims",
+            "type": "object",
+            "name": "jwt_payload"
+          }
+        ]
+      },
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Request parameters",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Name",
+            "name": "name",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_api_platform",
+        "name": "return_response",
+        "as": "84028396",
+        "title": null,
+        "description": "<span class=\"step-statement\">Return</span> <span class=\"provider\">4WD response with child items</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "http_status_code": "201",
+          "response": {
+            "order_items": {
+              "item_id": "123",
+              "item_price": "123",
+              "item_cost": "123",
+              "sku": "123",
+              "name": "123",
+              "qty": "123",
+              "qty_shipped": "123",
+              "row_total_price": "123",
+              "shipping_references": "=123"
+            },
+            "order_number": "order!@"
+          },
+          "response_headers": {
+            "Status": "200"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "http_status_code",
+            "control_type": "select",
+            "label": "Response",
+            "pick_list": [
+              [
+                "Success",
+                "200"
+              ],
+              [
+                "4WD response with child items",
+                "201"
+              ],
+              [
+                "4WD response without child items",
+                "202"
+              ]
+            ],
+            "extends_schema": true,
+            "change_on_blur": true
+          },
+          {
+            "type": "object",
+            "name": "response",
+            "label": "Response body",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Order number",
+                "type": "string",
+                "name": "order_number",
+                "optional": true
+              },
+              {
+                "name": "order_items",
+                "type": "array",
+                "of": "object",
+                "label": "Order items",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "integer",
+                    "label": "Item ID",
+                    "parse_output": "integer_conversion",
+                    "name": "item_id",
+                    "type": "integer",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Item price",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "item_price"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Item cost",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "item_cost"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Sku",
+                    "type": "string",
+                    "name": "sku"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "Qty",
+                    "parse_output": "integer_conversion",
+                    "name": "qty",
+                    "type": "integer",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "Qty shipped",
+                    "parse_output": "integer_conversion",
+                    "name": "qty_shipped",
+                    "type": "integer",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Row total price",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "row_total_price"
+                  },
+                  {
+                    "name": "shipping_references",
+                    "type": "array",
+                    "of": "string",
+                    "label": "Shipping References"
+                  },
+                  {
+                    "name": "child_items",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Child items",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "integer",
+                        "label": "Item ID",
+                        "parse_output": "integer_conversion",
+                        "name": "item_id",
+                        "type": "integer",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Item price",
+                        "parse_output": "float_conversion",
+                        "name": "item_price",
+                        "type": "number",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Item cost",
+                        "parse_output": "float_conversion",
+                        "name": "item_cost",
+                        "type": "number",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Sku",
+                        "name": "sku",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "name": "name",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Qty",
+                        "parse_output": "integer_conversion",
+                        "name": "qty",
+                        "type": "integer",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Qty shipped",
+                        "parse_output": "integer_conversion",
+                        "name": "qty_shipped",
+                        "type": "integer",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Row total price",
+                        "parse_output": "float_conversion",
+                        "name": "row_total_price",
+                        "type": "number",
+                        "optional": true
+                      },
+                      {
+                        "name": "shipping_references",
+                        "type": "array",
+                        "of": "string",
+                        "label": "Shipping References",
+                        "optional": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "name": "response_headers",
+            "label": "Response headers",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Status",
+                "name": "Status",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "http_status_code",
+          "response",
+          "response.order_items",
+          "response.order_items.item_id",
+          "response.order_items.item_price",
+          "response.order_items.item_cost",
+          "response.order_items.sku",
+          "response.order_items.name",
+          "response.order_items.qty",
+          "response.order_items.qty_shipped",
+          "response.order_items.row_total_price",
+          "response.order_items.shipping_references",
+          "response_headers",
+          "response_headers.Status",
+          "response.order_number",
+          "response.order_items.child_items.item_id",
+          "response.order_items.child_items.item_price",
+          "response.order_items.child_items.item_cost",
+          "response.order_items.child_items.sku",
+          "response.order_items.child_items.name",
+          "response.order_items.child_items.qty",
+          "response.order_items.child_items.qty_shipped",
+          "response.order_items.child_items.row_total_price",
+          "response.order_items.child_items.shipping_references"
+        ],
+        "uuid": "1e0b2ef0-b46a-4dd5-b66f-73610b9bda99",
+        "skip": false
+      },
+      {
+        "number": 2,
+        "provider": "workato_api_platform",
+        "name": "return_response",
+        "as": "a230cc84",
+        "title": null,
+        "description": "<span class=\"step-statement\">Return</span> API response",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "http_status_code": "201"
+        },
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "http_status_code",
+            "control_type": "select",
+            "label": "Response",
+            "pick_list": [
+
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "http_status_code",
+          "response",
+          "response.order_items",
+          "response.order_items.item_id",
+          "response.order_items.item_price",
+          "response.order_items.item_cost",
+          "response.order_items.sku",
+          "response.order_items.name",
+          "response.order_items.qty",
+          "response.order_items.qty_shipped",
+          "response.order_items.row_total_price",
+          "response.order_items.shipping_references",
+          "response.order_items.child_items",
+          "response.order_items.child_items.item_id",
+          "response.order_items.child_items.item_price",
+          "response.order_items.child_items.item_cost",
+          "response.order_items.child_items.sku",
+          "response.order_items.child_items.name",
+          "response.order_items.child_items.qty",
+          "response.order_items.child_items.qty_shipped",
+          "response.order_items.child_items.row_total_price",
+          "response.order_items.child_items.shipping_references",
+          "response_headers",
+          "response_headers.Status",
+          "response.order_number"
+        ],
+        "uuid": "eb32a788-341a-4107-b126-6215d7379f7d",
+        "skip": true
+      },
+      {
+        "number": 3,
+        "provider": "workato_api_platform",
+        "name": "return_response",
+        "as": "ef72fd8f",
+        "title": null,
+        "description": "<span class=\"step-statement\">Return</span> <span class=\"provider\">4WD response without child items</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "visible_config_fields": [
+          "http_status_code",
+          "response",
+          "response.order_items",
+          "response.order_items.item_id",
+          "response.order_items.item_price",
+          "response.order_items.item_cost",
+          "response.order_items.sku",
+          "response.order_items.name",
+          "response.order_items.qty",
+          "response.order_items.qty_shipped",
+          "response.order_items.row_total_price",
+          "response.order_items.shipping_references",
+          "response.order_items.child_items",
+          "response.order_items.child_items.item_id",
+          "response.order_items.child_items.item_price",
+          "response.order_items.child_items.item_cost",
+          "response.order_items.child_items.sku",
+          "response.order_items.child_items.name",
+          "response.order_items.child_items.qty",
+          "response.order_items.child_items.qty_shipped",
+          "response.order_items.child_items.row_total_price",
+          "response.order_items.child_items.shipping_references",
+          "response_headers",
+          "response_headers.Status",
+          "response.order_number"
+        ],
+        "uuid": "1af20402-3c8c-4c72-a671-686e6642ab5b",
+        "skip": true
+      }
+    ],
+    "comment": "Define the request and response parameters for this API endpoint",
+    "uuid": "be434d16-e1f2-42c9-9dbf-7787dce14134"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_api_platform",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

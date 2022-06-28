@@ -1,0 +1,16 @@
+{
+  "name": "Response Empty Array",
+  "method": "GET",
+  "path": "response-empty-array",
+  "legacy": false,
+  "recipe_id": {
+    "zip_name": "Sandbox/response_empty_array.recipe.json",
+    "name": "Response Empty Array",
+    "folder": "Sandbox"
+  },
+  "api_group_id": {
+    "zip_name": "sandbox_collection.api_group.json",
+    "name": "Sandbox Collection",
+    "folder": ""
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "My Macbook OPA Files Connection",
+  "provider": "onprem_files",
+  "secure_gateway_tunnel_name": "My Macbook OPA Group",
+  "root_folder": false
+}

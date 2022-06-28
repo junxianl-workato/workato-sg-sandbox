@@ -1,0 +1,28 @@
+{
+  "name": "callsqlserver",
+  "description": "When there is a new API request, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_api_platform",
+    "name": "receive_request",
+    "as": "43dc802c",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+    },
+    "block": [
+
+    ],
+    "comment": "Define the request and response parameters for this API endpoint",
+    "uuid": "1cfffe29-1509-4c8a-9914-ab67d326d6b1"
+  },
+  "config": [
+
+  ]
+}

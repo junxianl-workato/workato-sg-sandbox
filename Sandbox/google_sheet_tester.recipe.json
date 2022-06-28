@@ -1,0 +1,465 @@
+{
+  "name": "google sheet tester",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 36,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "28ea9e26",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> every 5 minutes",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "minutes",
+      "trigger_every": "5"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "google_sheets",
+        "name": "search_spreadsheet_rows_v4_new",
+        "as": "3f71b631",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "spreadsheet": "Test Spreadsheet Workato"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "team_drives": "my_drive",
+          "spreadsheet": "1vE_AYp_cwW8DwMPZD8vludSPLA3VF9181eATq8O7KN0",
+          "count": "200",
+          "sheet": "Sheet1",
+          "data": {
+            "col_column 1": "="
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "spreadsheet_id",
+            "control_type": "text",
+            "label": "Spreadsheet ID"
+          },
+          {
+            "type": "string",
+            "name": "spreadsheet_name",
+            "control_type": "text",
+            "label": "Spreadsheet name"
+          },
+          {
+            "type": "string",
+            "name": "sheet",
+            "control_type": "text",
+            "label": "Sheet name"
+          },
+          {
+            "type": "array",
+            "name": "rows",
+            "label": "Rows",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Row number",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "row_number"
+              },
+              {
+                "control_type": "text",
+                "label": "column 1",
+                "custom_attribute": 1,
+                "type": "string",
+                "name": "col_column_1"
+              },
+              {
+                "control_type": "text",
+                "label": "column 1 (Deprecated)",
+                "custom_attribute": 1,
+                "type": "string",
+                "name": "col_column 1"
+              },
+              {
+                "control_type": "text",
+                "label": "column 2",
+                "custom_attribute": 2,
+                "type": "string",
+                "name": "col_column_2"
+              },
+              {
+                "control_type": "text",
+                "label": "column 2 (Deprecated)",
+                "custom_attribute": 2,
+                "type": "string",
+                "name": "col_column 2"
+              },
+              {
+                "control_type": "text",
+                "label": "date",
+                "custom_attribute": 3,
+                "type": "string",
+                "name": "col_date"
+              },
+              {
+                "control_type": "text",
+                "label": "time",
+                "custom_attribute": 4,
+                "type": "string",
+                "name": "col_time"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "sheet",
+            "control_type": "select",
+            "label": "Sheet",
+            "hint": "Select a sheet to search for rows. The sheet must have at least one header row and one data row. <a href='https://workato.freshdesk.com/support/solutions/articles/1000213808-working-with-google-sheets' target='_blank'>Learn more</a>",
+            "pick_list": [
+              [
+                "Sheet1",
+                "Sheet1"
+              ]
+            ],
+            "optional": false,
+            "extends_schema": true,
+            "toggle_hint": "Select a sheet",
+            "toggle_field": {
+              "control_type": "text",
+              "label": "Sheet name",
+              "toggle_hint": "Use sheet name",
+              "extends_schema": true,
+              "change_on_blur": true,
+              "toggle_to_secondary_hint": "Use sheet name",
+              "toggle_to_primary_hint": "Select a sheet",
+              "hint": "Use <b>Sheet name</b> pill from the output of other Google Sheets’ triggers/actions. Or enter sheet name manually.",
+              "type": "string",
+              "name": "sheet_name"
+            }
+          },
+          {
+            "type": "object",
+            "name": "data",
+            "label": "Columns",
+            "hint": "Enter one or more search values. Workato will search for rows matching <b>ALL</b> of the search values below.",
+            "sticky": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "column 1",
+                "optional": true,
+                "sticky": true,
+                "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                "type": "string",
+                "name": "col_column 1"
+              },
+              {
+                "control_type": "text",
+                "label": "column 2",
+                "optional": true,
+                "sticky": true,
+                "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                "type": "string",
+                "name": "col_column 2"
+              },
+              {
+                "control_type": "text",
+                "label": "date",
+                "optional": true,
+                "sticky": true,
+                "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                "type": "string",
+                "name": "col_date"
+              },
+              {
+                "control_type": "text",
+                "label": "time",
+                "optional": true,
+                "sticky": true,
+                "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                "type": "string",
+                "name": "col_time"
+              }
+            ]
+          },
+          {
+            "type": "number",
+            "name": "count",
+            "control_type": "number",
+            "label": "Search result size",
+            "hint": "Maximum number of matched rows to be returned. Minimum accepted value is <b>1</b> and maximum accepted value is <b>50000</b>.",
+            "default": 200,
+            "optional": true,
+            "parse_output": "float_conversion"
+          }
+        ],
+        "visible_config_fields": [
+          "team_drives",
+          "spreadsheet",
+          "sheet",
+          "data",
+          "data.col_column 1",
+          "count",
+          "data.col_column 2"
+        ],
+        "uuid": "ce3ef71d-80ce-4456-bc06-c85f8a5a4f42"
+      },
+      {
+        "number": 2,
+        "as": "12ece45e",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 3,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "present",
+                  "lhs": "#{_('data.foreach.12ece45e.col_date')}",
+                  "rhs": "",
+                  "uuid": "condition-219b76a4-3847-493f-8c74-8de2ded50d9f"
+                },
+                {
+                  "operand": "not_equals_to",
+                  "lhs": "#{_('data.foreach.12ece45e.col_date')}",
+                  "rhs": "date",
+                  "uuid": "condition-75bf8d32-c9ec-4404-b979-f05fea87a909"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "workato_variable",
+                "name": "declare_variable",
+                "as": "7e5f56ee",
+                "title": "  Create variable event start",
+                "description": "Create variable <span class=\"provider\">event start</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "variables": {
+                    "schema": "[{\"name\":\"event_start\",\"type\":\"date_time\",\"optional\":true,\"label\":\"event start\",\"control_type\":\"date_time\"}]",
+                    "data": {
+                      "event_start": "2022-04-06T00:00:00+08:00"
+                    }
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "date_time",
+                    "name": "event_start",
+                    "control_type": "date_time",
+                    "label": "event start",
+                    "optional": true,
+                    "render_input": "date_time_conversion",
+                    "parse_output": "date_time_conversion"
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "variables",
+                    "control_type": "form-schema-builder",
+                    "label": "Variables",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "broadcast_change_event": true,
+                        "type": "string",
+                        "name": "schema"
+                      },
+                      {
+                        "label": "Data",
+                        "type": "object",
+                        "name": "data",
+                        "properties": [
+                          {
+                            "control_type": "date_time",
+                            "label": "event start",
+                            "render_input": "date_time_conversion",
+                            "parse_output": "date_time_conversion",
+                            "name": "event_start",
+                            "type": "date_time",
+                            "optional": true,
+                            "hint": "Defaults to nil if not supplied.",
+                            "sticky": true
+                          }
+                        ]
+                      }
+                    ],
+                    "exclude_fields": [
+                      "hint"
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "variables.data.event_start"
+                ],
+                "uuid": "97956a5c-0932-4b63-890b-632178d8d783",
+                "skip": true
+              },
+              {
+                "number": 5,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "4f45cd0c",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "=(_('data.foreach.12ece45e.col_date').to_date(format: \"MM/DD/YYYY\").to_s() +\" \"+_('data.foreach.12ece45e.col_time'))"
+                },
+                "uuid": "305a7333-b952-47ee-ac22-f5ce9201fb97"
+              },
+              {
+                "number": 6,
+                "provider": "google_calendar",
+                "name": "create_event",
+                "as": "fcdce445",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "id": "primary"
+                },
+                "toggleCfg": {
+                  "sendNotifications": true,
+                  "all_day": true
+                },
+                "input": {
+                  "sendNotifications": "false",
+                  "start": "=_('data.foreach.12ece45e.col_date').to_date(format: \"MM/DD/YYYY\").to_s() +\" \"+_('data.foreach.12ece45e.col_time')",
+                  "all_day": "false",
+                  "end_duration": "1",
+                  "summary": "TEST EVENT",
+                  "id": "primary"
+                },
+                "visible_config_fields": [
+                  "start",
+                  "time_zone",
+                  "summary",
+                  "description",
+                  "location",
+                  "sendNotifications",
+                  "guestsCanModify",
+                  "all_day",
+                  "attendees",
+                  "sendUpdates",
+                  "status",
+                  "visibility",
+                  "transparency"
+                ],
+                "uuid": "2b25d58e-d4d1-438c-a87c-cb4a968b0aa0",
+                "skip": false
+              }
+            ],
+            "uuid": "c6fa450a-6a21-4a73-a275-882c54a26467"
+          }
+        ],
+        "source": "#{_('data.google_sheets.3f71b631.rows')}",
+        "uuid": "d2e16aa3-d6ee-4b5e-87c9-bb3ffccc3dec"
+      }
+    ],
+    "uuid": "0c31e108-c5d6-46a0-a58f-5c2e529f12fa"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "google_sheets",
+      "account_id": {
+        "zip_name": "Sandbox/my_google_sheets_account.connection.json",
+        "name": "My Google Sheets account",
+        "folder": "Sandbox"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "google_calendar",
+      "account_id": {
+        "zip_name": "Sandbox/Workbot Tests/my_google_calendar_account.connection.json",
+        "name": "My Google Calendar account",
+        "folder": "Sandbox/Workbot Tests"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": true,
+      "account_id": null
+    }
+  ]
+}
